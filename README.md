@@ -1,2 +1,2 @@
 # QuantumSandbox
-A desktop application made with PyQt6 for learning about quantum mechanics through visual methods.
+An application to teach the basics of quantum mechanics through simulations in 1D and 2D, made with Qt for C++.
