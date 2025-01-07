@@ -1,0 +1,4 @@
+#ifndef POTENTIAL2D_H
+#define POTENTIAL2D_H
+
+#endif // POTENTIAL2D_H
