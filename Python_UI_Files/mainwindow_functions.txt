@@ -1,0 +1,18 @@
+''' WIDGET FUNCTIONALITY '''
+# aboutApp
+self.aboutApp.clicked.connect(self.aboutAppClicked)
+
+# aboutQt
+self.aboutQt.clicked.connect(self.aboutQtClicked)
+
+''' CONNECT FUNCTIONS '''
+
+
+# aboutQtClicked
+def aboutQtClicked(self):
+    QMessageBox().aboutQt(None, "About Qt")
+
+
+# aboutAppClicked
+def aboutAppClicked(self):
+    QMessageBox().about(None, "About Quantum Sandbox", "TEXT")

@@ -1,16 +1,43 @@
-# This is a sample Python script.
+import sys
+from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
+from PySide6.QtCore import QFile
+from Python_UI_Files.ui_mainwindow import Ui_MainWindow
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from Python_UI_Files.ui_tisemainwindow import Ui_TISEMainWindow
 
+# secondary windows
+class TISEMainWindow(QDialog):
+    def __init__(self):
+        super(TISEMainWindow, self).__init__()
+        self.setWindowTitle("Time-Independent Schrodinger Equation")
+        self.ui = Ui_TISEMainWindow()
+        self.ui.setupUi(self)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# main window
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        self.setWindowTitle("Quantum Sandbox")
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
+        # windows
+        self.tiseWindow = None
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+        # start windows
+        self.ui.startTise.clicked.connect(self.startTiseClicked)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # "open window" functions:
+    def startTiseClicked(self):
+        if self.tiseWindow is None or not self.tiseWindow.isVisible():
+            self.tiseWindow = TISEMainWindow()
+            self.tiseWindow.ui.tabDSelect.setCurrentIndex(0)
+            self.tiseWindow.show()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+
+    window = MainWindow()
+    window.show()
+
+    sys.exit(app.exec())
