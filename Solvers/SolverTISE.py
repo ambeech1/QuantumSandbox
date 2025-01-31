@@ -37,17 +37,27 @@ class SolverTISE:
     def readPotential(self, potentialString):
         try:
             expr = sp.sympify(potentialString)
-            expr.subs(self.xSym, self.x)
+            self.U = expr.subs(self.xSym, self.x)
             self.potExpr = expr
         except:
             self.U_clear_()
             self.potExpr = None
 
-    def setX(self):
-        pass
+    def setXMin(self, min):
+        self.xmin = min
+        self.x_init_()
 
-    def setPot(self):
-        pass
+    def setXMax(self, max):
+        self.xmax = max
+        self.x_init_()
+
+    def setXN(self, N):
+        self.N = N
+        self.x_init_()
+        if self.potExpr is not None:
+            self.readPotential(self.potExpr)
+        else:
+            pass
 
     def defineHamiltonian(self):
         pass
