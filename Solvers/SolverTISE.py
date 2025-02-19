@@ -8,6 +8,9 @@ import scipy.linalg as la
 from scipy.linalg import eigh_tridiagonal
 import sympy as sp
 
+x = sp.symbols('x')
+u = sp.Function('u')
+
 # class definition
 class SolverTISE:
     def __init__(self):
@@ -24,24 +27,36 @@ class SolverTISE:
         self.N = 501
         self.x = None
         self.x_init_()
-        self.U = None
-        self.potExpr = None
+        self.UArray = None
+        self.UFunc = None
         self.xSym = sp.symbols("x")
 
     def x_init_(self):
         self.x = np.linspace(self.xmin, self.xmax, self.N)
 
     def U_clear_(self):
-        self.U = None
+        self.UFunc = None
+        self.UArray = None
 
-    def readPotential(self, potentialString):
+    def plot_(self, plotWindow):
+        if self.UFunc is not None:
+            plotWindow.plot(self.x, self.UArray)
+        else:
+            pass
+
+    def removeCurve_(self, curve):
+        pass
+
+    def readPotential(self, potentialString, plotWindow):
         try:
             expr = sp.sympify(potentialString)
-            self.U = expr.subs(self.xSym, self.x)
-            self.potExpr = expr
+            expr = expr.subs(u(x), sp.Heaviside(x))
+            self.UFunc = sp.lambdify(x, expr, 'numpy')
+            self.UArray = self.UFunc(self.x)
+            self.plot_(plotWindow)
         except:
             self.U_clear_()
-            self.potExpr = None
+            #self.removeCurve_()
 
     def setXMin(self, min):
         self.xmin = min
@@ -54,8 +69,8 @@ class SolverTISE:
     def setXN(self, N):
         self.N = N
         self.x_init_()
-        if self.potExpr is not None:
-            self.readPotential(self.potExpr)
+        if self.UFunc is not None:
+            self.UArray = self.UFunc(self.x)
         else:
             pass
 

@@ -23,8 +23,12 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QFormLayout,
 
 from pyqtgraph import PlotWidget
 
+from Solvers.SolverTISE import SolverTISE
+
 class Ui_TISEMainWindow(object):
+    Solver = SolverTISE()
     def setupUi(self, TISEMainWindow):
+
         if not TISEMainWindow.objectName():
             TISEMainWindow.setObjectName(u"TISEMainWindow")
         TISEMainWindow.resize(1309, 894)
@@ -87,6 +91,10 @@ class Ui_TISEMainWindow(object):
         self.TISEPlot1D.setObjectName(u"TISEPlot1D")
         self.verticalLayout_8 = QVBoxLayout(self.TISEPlot1D)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+
+        self.TISEPlot1D.setXRange(-10, 10)
+        self.TISEPlot1D.setYRange(-10, 10)
+        self.TISEPlot1D.showGrid(x = True, y = True)
 
         self.verticalLayout.addWidget(self.TISEPlot1D)
 
@@ -1046,6 +1054,17 @@ class Ui_TISEMainWindow(object):
 
 
         QMetaObject.connectSlotsByName(TISEMainWindow)
+
+
+        ''' WIDGET FUNCTIONALITY '''
+        self.lineEdit.textChanged.connect(self.potentialChanged)
+
+
+    ''' CONNECT FUNCTIONS '''
+    def potentialChanged(self):
+        self.Solver.readPotential(self.lineEdit.text(), self.TISEPlot1D)
+
+
     # setupUi
 
     def retranslateUi(self, TISEMainWindow):
