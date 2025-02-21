@@ -40,7 +40,8 @@ class SolverTISE:
 
     def plot_(self, plotWindow):
         if self.UFunc is not None:
-            plotWindow.plot(self.x, self.UArray)
+            #if plotWindow.getPlotItem().
+            plotWindow.plot(self.x, self.UArray, "Potential Energy")
         else:
             pass
 
